@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PolaPintar - Pembahasan Deret Aritmatika</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    <script>MathJax = { tex: { inlineMath: [['$', '$'], ['\\(', '\\)']] } };</script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+
+    <style>
+        body { margin: 0; font-family: 'Poppins', sans-serif; background-color: #FAFAFA; padding: 20px; color: #2E3A49; }
+        .container { max-width: 700px; margin: 0 auto; background: white; padding: 30px; border-radius: 16px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); }
+        h1 { color: #2E3A49; border-bottom: 3px solid #FFB800; display: block; text-align: center; padding-bottom: 15px; margin-bottom: 40px; }
+        .item-pembahasan { margin-bottom: 30px; padding-bottom: 20px; border-bottom: 1px solid #E2E8F0; }
+        .judul-soal { font-weight: 700; color: #2E3A49; margin-bottom: 15px; display: block; font-size: 18px; }
+        .kotak-kunci { background: #FFFDF5; padding: 20px; border-radius: 12px; border-left: 5px solid #FFB800; line-height: 1.6; }
+        .teks-jawaban { color: #FFB800; font-weight: bold; } 
+        .footer-pembahasan { text-align: center; margin-top: 40px; padding-top: 20px; }
+        .btn-kembali { display: inline-block; text-decoration: none; background: #F1F5F9; color: #64748B; padding: 12px 24px; border-radius: 12px; font-weight: 600; transition: 0.3s; }
+        .btn-kembali:hover { background: #E2E8F0; color: #2E3A49; transform: translateY(-2px); }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Pembahasan Deret Aritmatika</h1>
+
+        <div class="item-pembahasan">
+            <span class="judul-soal">Soal 1: Definisi Deret</span>
+            <div class="kotak-kunci">
+                <strong>Analisis:</strong> Barisan adalah urutan angka, sedangkan <strong>Deret</strong> adalah hasil dari penjumlahan suku-suku pada barisan tersebut.<br><br>
+                <strong>Jawaban:</strong> <span class="teks-jawaban">B (Hasil penjumlahan suku-suku barisan aritmatika)</span>
+            </div>
+        </div>
+
+        <div class="item-pembahasan">
+            <span class="judul-soal">Soal 2: Arti Simbol $S_n$</span>
+            <div class="kotak-kunci">
+                <strong>Analisis:</strong> Dalam materi deret, huruf <i>S</i> berasal dari kata <i>Sum</i> (Jumlah). Jadi, $S_n$ berarti jumlah dari $n$ buah suku pertama.<br><br>
+                <strong>Jawaban:</strong> <span class="teks-jawaban">D (Jumlah n suku pertama)</span>
+            </div>
+        </div>
+
+        <div class="item-pembahasan">
+            <span class="judul-soal">Soal 3: Menghitung $S_5$ Manual</span>
+            <div class="kotak-kunci">
+                <strong>Hitungan:</strong> Penjumlahan langsung: $2 + 4 + 6 + 8 + 10 = 30$.<br>
+                Atau rumus: $S_5 = \frac{5}{2}(2 + 10) = 2.5 \times 12 = 30$.<br><br>
+                <strong>Jawaban:</strong> <span class="teks-jawaban">C (30)</span>
+            </div>
+        </div>
+
+        <div class="item-pembahasan">
+            <span class="judul-soal">Soal 4: Rumus Cepat dengan $U_n$</span>
+            <div class="kotak-kunci">
+                <strong>Hitungan:</strong> Gunakan rumus $S_n = \frac{n}{2}(a + U_n)$ jika suku terakhir diketahui.<br>
+                $S_{10} = \frac{10}{2}(3 + 39) = 5 \times 42 = 210$.<br><br>
+                <strong>Jawaban:</strong> <span class="teks-jawaban">A (210)</span>
+            </div>
+        </div>
+
+        <div class="item-pembahasan">
+            <span class="judul-soal">Soal 5: Rumus Utama Deret</span>
+            <div class="kotak-kunci">
+                <strong>Analisis:</strong> Rumus baku untuk menjumlahkan deret aritmatika jika beda ($b$) diketahui adalah $S_n = \frac{n}{2} (2a + (n-1)b)$.<br><br>
+                <strong>Jawaban:</strong> <span class="teks-jawaban">A ($S_n = \frac{n}{2} (2a + (n-1)b)$)</span>
+            </div>
+        </div>
+
+        <div class="footer-pembahasan">
+            <a href="latihan4.html" class="btn-kembali">⬅️ Kembali ke Hasil Kuis</a>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PolaPintar - Barisan Aritmatika</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    
+    <script>
+      MathJax = { tex: { inlineMath: [['$', '$'], ['\\(', '\\)']] } };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+
+    <style>
+        body { margin: 0; font-family: 'Poppins', sans-serif; background-color: #FAFAFA; color: #2E3A49; }
+        .kontainer-materi { max-width: 800px; margin: 40px auto; padding: 30px; background: white; border-radius: 16px; box-shadow: 0 10px 30px rgba(0,0,0,0.05); }
+        h1 { color: #2E3A49; text-align: center; border-bottom: 3px solid #FFB800; padding-bottom: 10px; display: inline-block; margin-bottom: 30px; }
+        .slide { display: none; animation: fadeIn 0.5s; }
+        .slide.aktif { display: block; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        
+        .kotak-rumus { background-color: #FFFDF5; border-left: 5px solid #FFB800; padding: 20px; margin: 20px 0; border-radius: 0 8px 8px 0; font-size: 18px; }
+        .teks-highlight { color: #FFB800; font-weight: bold; }
+        
+        .navigasi { display: flex; justify-content: space-between; margin-top: 40px; border-top: 2px dashed #E2E8F0; padding-top: 20px; }
+        .btn-nav { background-color: #2E3A49; color: white; border: none; padding: 12px 24px; border-radius: 8px; font-weight: 600; cursor: pointer; transition: 0.3s; font-family: 'Poppins'; }
+        .btn-nav:hover { background-color: #1E293B; }
+        .btn-nav:disabled { background-color: #CBD5E1; cursor: not-allowed; }
+        .btn-latihan { background-color: #FFB800; color: white; border: none; padding: 12px 24px; border-radius: 8px; font-weight: 600; cursor: pointer; text-decoration: none; display: inline-block; box-shadow: 0 4px 15px rgba(255, 184, 0, 0.3); transition: 0.3s; }
+        .btn-latihan:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(255, 184, 0, 0.4); }
+    </style>
+</head>
+<body>
+
+    <div class="kontainer-materi">
+        <div style="text-align: center;"><h1 id="judulMateri">Materi 2: Barisan Aritmatika</h1></div>
+
+        <div class="slide aktif" id="slide1">
+            <h2>Kenalan sama Barisan Aritmatika</h2>
+            <p>Pernah liat susunan angka yang naiknya stabil? Kayak misal $2, 4, 6, 8, \dots$</p>
+            <p>Nah, barisan yang loncatannya atau selisihnya selalu sama persis ini namanya <strong>Barisan Aritmatika</strong>.</p>
+            <div class="kotak-rumus">
+                Kunci utamanya ada di <strong>Selisih</strong> atau di matematika sering banget disebut <span class="teks-highlight">Beda ($b$)</span>.
+            </div>
+            <p><strong>Contohnya:</strong> dari $5$ ke $10$, itu nambah $5$. Terus $10$ ke $15$, nambah $5$ lagi. Angka penambah yang selalu konstan inilah yang jadi "detak jantung" dari barisan aritmatika.</p>
+        </div>
+
+        <div class="slide" id="slide2">
+            <h2>Rumus Andalan Kita ($U_n$)</h2>
+            <p>Biar nggak capek ngitung manual sampe suku ke-100, kita butuh mesin otomatisnya nih. Di aritmatika, rumus saktinya kayak gini:</p>
+            <div class="kotak-rumus" style="text-align: center; font-size: 24px;">
+                $$U_n = a + (n-1)b$$
+            </div>
+            <p>Keliatannya panjang, tapi artinya simpel banget kok:</p>
+            <ul>
+                <li><strong>$a$</strong> = suku pertama (angka yang posisinya paling depan)</li>
+                <li><strong>$b$</strong> = beda atau selisih ($U_2 - U_1$)</li>
+                <li><strong>$n$</strong> = urutan angka yang lagi pengen kita cari</li>
+            </ul>
+        </div>
+
+        <div class="slide" id="slide3">
+            <h2>Yuk, Coba Pakai Rumusnya!</h2>
+            <p>Biar makin kebayang, kita langsung coba praktek aja ya.</p>
+            <p>Misal kita punya barisan: <strong>$3, 7, 11, 15, \dots$</strong><br>
+            Terus kita disuruh cari angka di urutan ke-10 ($U_{10}$). Gimana caranya?</p>
+            <div class="kotak-rumus">
+                <ul>
+                    <li>Tentukan $a$ (angka pertama) = $3$</li>
+                    <li>Tentukan $b$ (loncatannya) = $7 - 3 = 4$</li>
+                </ul>
+                <p><strong>Masukin ke rumus:</strong><br>
+                $U_{10} = 3 + (10 - 1)4$<br>
+                $U_{10} = 3 + (9 \times 4)$<br>
+                $U_{10} = 3 + 36 = 39$</p>
+            </div>
+            <p>Selesai deh, gampang banget kan cara pakainya! Udah siap buat uji pemahaman?</p>
+            <div style="text-align: center; margin-top: 30px;">
+                <a href="latihan2.html" class="btn-latihan">Mulai Latihan Soal 🚀</a>
+            </div>
+        </div>
+
+        <div class="navigasi">
+            <button id="btnSblm" class="btn-nav" disabled>⬅️ Sebelumnya</button>
+            <span id="indikatorSlide" style="align-self: center; font-weight: 600; color: #64748B;">1 / 3</span>
+            <button id="btnLanjut" class="btn-nav">Selanjutnya ➡️</button>
+        </div>
+    </div>
+
+    <script>
+        let slideSaatIni = 1; const totalSlide = 3;
+        const btnSblm = document.getElementById('btnSblm');
+        const btnLanjut = document.getElementById('btnLanjut');
+        const indikator = document.getElementById('indikatorSlide');
+
+        function updateSlide() {
+            document.querySelectorAll('.slide').forEach(s => s.classList.remove('aktif'));
+            document.getElementById(`slide${slideSaatIni}`).classList.add('aktif');
+            indikator.innerText = `${slideSaatIni} / ${totalSlide}`;
+            btnSblm.disabled = slideSaatIni === 1;
+            btnLanjut.style.display = slideSaatIni === totalSlide ? 'none' : 'block';
+        }
+
+        btnLanjut.addEventListener('click', () => { if(slideSaatIni < totalSlide) { slideSaatIni++; updateSlide(); }});
+        btnSblm.addEventListener('click', () => { if(slideSaatIni > 1) { slideSaatIni--; updateSlide(); }});
+    </script>
+</body>
+</html>

@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PolaPintar - Latihan Deret Aritmatika</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    <script>MathJax = { tex: { inlineMath: [['$', '$'], ['\\(', '\\)']] } };</script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+
+    <style>
+        body { margin: 0; font-family: 'Poppins', sans-serif; background-color: #FAFAFA; color: #2E3A49; }
+        .kuis-container { max-width: 700px; margin: 40px auto; padding: 30px; background: white; border-radius: 16px; box-shadow: 0 10px 30px rgba(0,0,0,0.05); }
+        .header-kuis { text-align: center; margin-bottom: 30px; border-bottom: 2px dashed #E2E8F0; padding-bottom: 20px; }
+        .soal-teks { font-size: 18px; line-height: 1.6; margin-bottom: 25px; font-weight: 600; }
+        .opsi-list { display: flex; flex-direction: column; gap: 12px; }
+        .opsi-item { padding: 15px 20px; border: 2px solid #E2E8F0; border-radius: 10px; cursor: pointer; transition: 0.2s; font-size: 16px; }
+        .opsi-item:hover { border-color: #FFB800; background-color: #FFFDF5; }
+        .opsi-item.terpilih { border-color: #FFB800; background-color: #FFB800; color: white; font-weight: bold; }
+        .btn-lanjut { background-color: #2E3A49; color: white; border: none; padding: 12px 24px; border-radius: 8px; font-weight: 600; cursor: pointer; margin-top: 30px; width: 100%; font-size: 16px; transition: 0.3s; }
+        #layarHasil { display: none; text-align: center; }
+        .skor-box { font-size: 60px; font-weight: 700; color: #FFB800; margin: 20px 0; }
+        .statistik { display: flex; justify-content: center; gap: 30px; margin-bottom: 30px; }
+        .stat-item { background: #F8FAFC; padding: 15px 25px; border-radius: 10px; }
+        .stat-benar { color: #10B981; font-weight: bold; font-size: 20px; }
+        .stat-salah { color: #EF4444; font-weight: bold; font-size: 20px; }
+        .aksi-ganda { display: flex; gap: 15px; justify-content: center; }
+        .btn-pembahasan { background-color: white; color: #2E3A49; border: 2px solid #2E3A49; padding: 12px 24px; border-radius: 8px; font-weight: 600; cursor: pointer; flex: 1; text-decoration: none; text-align: center; }
+        .btn-materi-lanjut { background-color: #FFB800; color: white; border: none; padding: 12px 24px; border-radius: 8px; font-weight: 600; cursor: pointer; flex: 1; }
+    </style>
+</head>
+<body>
+    <div class="kuis-container">
+        <div id="layarKuis">
+            <div class="header-kuis">
+                <span style="color: #64748B; font-size: 14px;">Latihan Deret Aritmatika</span>
+                <h2 style="margin: 5px 0 0 0;" id="indikatorSoal">Soal 1 / 5</h2>
+            </div>
+            <div class="soal-teks" id="teksSoal">Memuat soal...</div>
+            <div class="opsi-list" id="wadahOpsi"></div>
+            <button id="btnLanjut" class="btn-lanjut" disabled>Pilih jawaban dulu</button>
+        </div>
+
+        <div id="layarHasil">
+            <h2>Latihan Selesai! 🎉</h2>
+            <div class="skor-box" id="nilaiAkhir">0</div>
+            <div class="statistik">
+                <div class="stat-item"><div>Benar</div><div class="stat-benar" id="jmlBenar">0</div></div>
+                <div class="stat-item"><div>Salah</div><div class="stat-salah" id="jmlSalah">0</div></div>
+            </div>
+            <div class="aksi-ganda">
+                <a href="pembahasan4.html" class="btn-pembahasan">Lihat Pembahasan</a>
+                <button class="btn-materi-lanjut" onclick="bukaDashboard()">Kembali ke Dashboard 🔓</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const bankSoal = [
+            { pertanyaan: "Apa yang dimaksud dengan Deret Aritmatika?", opsi: ["Urutan angka acak", "Hasil penjumlahan suku-suku barisan aritmatika", "Perkalian antar angka", "Pengurangan berulang"], jawabanBenar: 1 },
+            { pertanyaan: "Simbol $S_n$ dalam deret aritmatika melambangkan...", opsi: ["Selisih suku", "Suku terakhir", "Suku pertama", "Jumlah n suku pertama"], jawabanBenar: 3 },
+            { pertanyaan: "Berapakah jumlah 5 suku pertama dari deret $2 + 4 + 6 + 8 + 10$?", opsi: ["20", "25", "30", "35"], jawabanBenar: 2 },
+            { pertanyaan: "Jika $a=3$ dan $U_{10}=39$, berapakah nilai $S_{10}$? (Gunakan rumus $\\frac{n}{2}(a + U_n)$)", opsi: ["210", "150", "190", "200"], jawabanBenar: 0 },
+            { pertanyaan: "Rumus deret aritmatika yang benar adalah...", opsi: ["$S_n = \\frac{n}{2} (2a + (n-1)b)$", "$S_n = a \\cdot r^{n-1}$", "$S_n = a + (n-1)b$", "$S_n = n^2 + 1$"], jawabanBenar: 0 }
+        ];
+
+        let soalSekarang = 0; let skorBenar = 0; let jawabanTerpilih = null;
+
+        function muatSoal() {
+            jawabanTerpilih = null;
+            document.getElementById("btnLanjut").disabled = true;
+            document.getElementById("btnLanjut").innerText = "Pilih jawaban dulu";
+            document.getElementById("indikatorSoal").innerText = `Soal ${soalSekarang + 1} / ${bankSoal.length}`;
+            document.getElementById("teksSoal").innerHTML = bankSoal[soalSekarang].pertanyaan;
+            const wadahOpsi = document.getElementById("wadahOpsi");
+            wadahOpsi.innerHTML = "";
+            bankSoal[soalSekarang].opsi.forEach((teks, index) => {
+                const div = document.createElement("div");
+                div.className = "opsi-item";
+                div.innerHTML = teks;
+                div.onclick = () => {
+                    jawabanTerpilih = index;
+                    document.querySelectorAll(".opsi-item").forEach(o => o.classList.remove("terpilih"));
+                    div.classList.add("terpilih");
+                    document.getElementById("btnLanjut").disabled = false;
+                    document.getElementById("btnLanjut").innerText = (soalSekarang === bankSoal.length - 1) ? "Kumpulkan Jawaban" : "Lanjut";
+                };
+                wadahOpsi.appendChild(div);
+            });
+            if (window.MathJax) { MathJax.typesetPromise(); }
+        }
+
+        document.getElementById("btnLanjut").addEventListener("click", () => {
+            if (jawabanTerpilih === bankSoal[soalSekarang].jawabanBenar) skorBenar++;
+            soalSekarang++;
+            if (soalSekarang < bankSoal.length) muatSoal();
+            else tampilkanHasil();
+        });
+
+        function tampilkanHasil() {
+            document.getElementById("layarKuis").style.display = "none";
+            document.getElementById("layarHasil").style.display = "block";
+            document.getElementById("nilaiAkhir").innerText = Math.round((skorBenar / bankSoal.length) * 100);
+            document.getElementById("jmlBenar").innerText = skorBenar;
+            document.getElementById("jmlSalah").innerText = bankSoal.length - skorBenar;
+        }
+
+        function bukaDashboard() {
+            localStorage.setItem('progressMateri', 'lulus-materi-4');
+            window.location.href = 'dashboard.html';
+        }
+
+        muatSoal();
+    </script>
+</body>
+</html>

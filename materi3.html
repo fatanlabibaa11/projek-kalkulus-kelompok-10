@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PolaPintar - Barisan Geometri</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    
+    <script>
+      MathJax = { tex: { inlineMath: [['$', '$'], ['\\(', '\\)']] } };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+
+    <style>
+        body { margin: 0; font-family: 'Poppins', sans-serif; background-color: #FAFAFA; color: #2E3A49; }
+        .kontainer-materi { max-width: 800px; margin: 40px auto; padding: 30px; background: white; border-radius: 16px; box-shadow: 0 10px 30px rgba(0,0,0,0.05); }
+        h1 { color: #2E3A49; text-align: center; border-bottom: 3px solid #FFB800; padding-bottom: 10px; display: inline-block; margin-bottom: 30px; width: 100%; box-sizing: border-box; }
+        .slide { display: none; min-height: 300px; }
+        .slide.aktif { display: block; animation: fadeIn 0.5s; }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        
+        .btn-nav { padding: 12px 24px; border: none; border-radius: 12px; cursor: pointer; font-weight: 600; transition: all 0.3s; background: #F1F5F9; color: #64748B; font-family: 'Poppins', sans-serif; }
+        .btn-nav:hover:not(:disabled) { background: #E2E8F0; color: #2E3A49; }
+        .btn-nav:disabled { opacity: 0.5; cursor: not-allowed; }
+        
+        /* Tombol Selanjutnya dikembalikan ke biru kehitaman asli */
+        #btnLanjut { background-color: #2E3A49; color: white; }
+        #btnLanjut:hover { background-color: #1E293B; }
+        
+        .navigasi { display: flex; justify-content: space-between; margin-top: 40px; border-top: 1px solid #E2E8F0; padding-top: 20px; align-items: center; }
+        
+        .btn-latihan { background-color: #FFB800; color: white; text-decoration: none; padding: 15px 30px; border-radius: 12px; display: inline-block; font-weight: 700; transition: 0.3s; box-shadow: 0 4px 15px rgba(255, 184, 0, 0.3); }
+        .btn-latihan:hover { background-color: #E6A600; transform: translateY(-2px); }
+        
+        /* Perbaikan kerapian paragraf */
+        p { line-height: 1.6; margin-bottom: 15px; }
+        ul { line-height: 1.8; padding-left: 20px; margin-bottom: 15px; }
+    </style>
+</head>
+<body>
+    <div class="kontainer-materi">
+        <h1>Materi 3: Barisan Geometri</h1>
+        
+        <div id="slide1" class="slide aktif">
+            <h3 style="margin-bottom: 15px;">Apa itu Barisan Geometri?</h3>
+            <p>Kalau barisan ini, perbandingan antar sukunya didapat dari <b>perkalian atau pembagian</b> yang tetap.</p>
+            <p>Perbandingan ini disebut sebagai <b>Rasio ($r$)</b>.</p>
+            <div style="background: #FFF9E6; padding: 20px; border-radius: 12px; border-left: 5px solid #FFB800; margin-top: 20px;">
+                <b>Contoh:</b> 3, 6, 12, ... <br>
+                (Rasionya adalah <b>2</b>, karena setiap suku dikali 2).
+            </div>
+        </div>
+
+        <div id="slide2" class="slide">
+            <h3 style="margin-bottom: 15px;">Rumus Suku Ke-$n$ ($U_n$)</h3>
+            <p>Untuk mencari nilai pada urutan tertentu, kita menggunakan rumus:</p>
+            <h2 style="text-align: center; color: #2E3A49; margin: 30px 0; font-size: 32px;">$U_n = a \cdot r^{n-1}$</h2>
+            <p><b>Penjelasan simbol:</b></p>
+            <ul>
+                <li><b>$U_n$ (Suku ke-$n$):</b> Nilai angka pada urutan yang sedang kamu cari.</li>
+                <li><b>$a$ (Suku Pertama):</b> Angka paling awal yang ada di barisan tersebut.</li>
+                <li><b>$r$ (Rasio):</b> Perbandingan atau "pengali" antar suku. Caranya: $r = \frac{U_n}{U_{n-1}}$.</li>
+                <li><b>$n$ (Urutan Suku):</b> Posisi angka yang ingin kamu ketahui nilainya.</li>
+            </ul>
+        </div>
+
+        <div id="slide3" class="slide">
+            <h3 style="margin-bottom: 15px;">Contoh Perhitungan</h3>
+            <p>Diketahui barisan 3, 6, 12, ... Berapa nilai suku ke-5 ($U_5$)?</p>
+            <div style="background: #FFF9E6; padding: 20px; border-radius: 12px; border-left: 5px solid #FFB800; margin-top: 20px;">
+                <b>Diketahui:</b> $a = 3$, $r = 2$, $n = 5$ <br><br>
+                <b>Jawab:</b><br>
+                $U_5 = 3 \cdot 2^{5-1}$ <br>
+                $U_5 = 3 \cdot 2^4$ <br>
+                $U_5 = 3 \cdot 16 = 48$.
+            </div>
+            <p style="margin-top: 30px; text-align: center; font-weight: 600;">Sudah paham? Yuk, lanjut ke latihan!</p>
+            <div style="text-align: center; margin-top: 20px;">
+                <a href="latihan3.html" class="btn-latihan">Mulai Latihan Soal 🚀</a>
+            </div>
+        </div>
+
+        <div class="navigasi">
+            <button id="btnSblm" class="btn-nav" disabled>⬅️ Sebelumnya</button>
+            <span id="indikatorSlide" style="font-weight: 600; color: #64748B;">1 / 3</span>
+            <button id="btnLanjut" class="btn-nav">Selanjutnya ➡️</button>
+        </div>
+    </div>
+
+    <script>
+        let slideSaatIni = 1; const totalSlide = 3;
+        const btnSblm = document.getElementById('btnSblm');
+        const btnLanjut = document.getElementById('btnLanjut');
+        const indikator = document.getElementById('indikatorSlide');
+
+        function updateSlide() {
+            document.querySelectorAll('.slide').forEach(s => s.classList.remove('aktif'));
+            document.getElementById(`slide${slideSaatIni}`).classList.add('aktif');
+            indikator.innerText = `${slideSaatIni} / ${totalSlide}`;
+            btnSblm.disabled = slideSaatIni === 1;
+            btnLanjut.style.display = slideSaatIni === totalSlide ? 'none' : 'block';
+        }
+
+        btnLanjut.addEventListener('click', () => { if(slideSaatIni < totalSlide) slideSaatIni++; updateSlide(); });
+        btnSblm.addEventListener('click', () => { if(slideSaatIni > 1) slideSaatIni--; updateSlide(); });
+    </script>
+</body>
+</html>

@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Materi 3 - Barisan Geometri</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    
+    <script>
+      MathJax = { tex: { inlineMath: [['$', '$'], ['\\(', '\\)']] } };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+    <style>
+        body { 
+            background-color: #F8FAFC; 
+            font-family: 'Poppins', sans-serif; 
+            margin: 0; 
+            display: flex; 
+            justify-content: center; 
+            padding: 40px 20px; 
+        }
+
+        .materi-card { 
+            background: #fff; 
+            width: 100%; 
+            max-width: 800px; 
+            padding: 50px; 
+            border-radius: 20px; 
+            box-shadow: 0 4px 25px rgba(0,0,0,0.03); 
+        }
+        
+        /* Breadcrumb & Title */
+        .breadcrumb { 
+            font-size: 14px; 
+            color: #94A3B8; 
+            margin-bottom: 20px; 
+            font-weight: 500; 
+        }
+        .breadcrumb span { 
+            color: #FFB800; 
+            font-weight: 600; 
+        }
+        .materi-title { 
+            font-size: 32px; 
+            font-weight: 700; 
+            color: #1E293B; 
+            margin-top: 0; 
+            margin-bottom: 40px; 
+        }
+        
+        /* Slide Content */
+        .slide-content { 
+            display: none; 
+            animation: fadeIn 0.4s ease-in-out; 
+            min-height: 250px;
+        }
+        .slide-content.active { 
+            display: block; 
+        }
+        .slide-text { 
+            font-size: 16px; 
+            color: #475569; 
+            line-height: 1.8; 
+            margin-bottom: 20px; 
+        }
+        
+        /* Highlight Box (Untuk Rumus & Contoh) */
+        .highlight-box { 
+            background: #FAFAFA; 
+            border-left: 4px solid #FFB800; 
+            padding: 25px; 
+            border-radius: 0 12px 12px 0; 
+            margin-top: 25px; 
+        }
+        .highlight-box h3 { 
+            font-size: 16px; 
+            color: #1E293B; 
+            margin-top: 0; 
+            margin-bottom: 15px; 
+            display: flex; 
+            align-items: center; 
+            gap: 10px; 
+        }
+        .highlight-box p { 
+            margin: 8px 0; 
+            color: #475569; 
+            font-size: 16px; 
+            line-height: 1.8; 
+        }
+        .highlight-box ul {
+            margin-top: 10px;
+            padding-left: 20px;
+            color: #475569;
+            line-height: 1.8;
+        }
+
+        /* Pagination Dots */
+        .dots-container { 
+            display: flex; 
+            justify-content: center; 
+            gap: 10px; 
+            margin: 40px 0; 
+        }
+        .dot { 
+            width: 10px; 
+            height: 10px; 
+            background: #E2E8F0; 
+            border-radius: 50%; 
+            transition: 0.3s; 
+        }
+        .dot.active { 
+            width: 30px; 
+            background: #FFB800; 
+            border-radius: 10px; 
+        }
+
+        /* Navigation Buttons */
+        .bottom-nav { 
+            display: flex; 
+            justify-content: space-between; 
+            align-items: center; 
+            margin-top: 20px; 
+        }
+        .btn { 
+            padding: 12px 24px; 
+            border-radius: 8px; 
+            font-size: 15px; 
+            font-weight: 600; 
+            cursor: pointer; 
+            border: none; 
+            font-family: 'Poppins', sans-serif; 
+            text-decoration: none; 
+            transition: 0.2s; 
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .btn-back { 
+            background: #F1F5F9; 
+            color: #475569; 
+        }
+        .btn-back:hover { 
+            background: #E2E8F0; 
+        }
+        .btn-next { 
+            background: #FFB800; 
+            color: #fff; 
+        }
+        .btn-next:hover { 
+            background: #F59E0B; 
+        }
+
+        @keyframes fadeIn { 
+            from { opacity: 0; transform: translateY(10px); } 
+            to { opacity: 1; transform: translateY(0); } 
+        }
+    </style>
+</head>
+<body>
+
+    <div class="materi-card">
+        <div class="breadcrumb">
+            Materi > <span>Barisan Geometri</span>
+        </div>
+        
+        <h1 class="materi-title">Barisan Geometri</h1>
+
+        <div class="slide-content active" id="slide-0">
+            <div class="slide-text">
+                <p><strong>Apa itu Barisan Geometri?</strong></p>
+                <p>Kalau di aritmatika kita ngomongin soal "selisih", di geometri kita ngomongin soal <strong>Rasio ($r$)</strong>. Barisan ini unik karena setiap sukunya diperoleh dengan cara mengalikan suku sebelumnya dengan suatu angka tetap.</p>
+                <br>
+                <p><strong>Contoh simpel:</strong> $2, 6, 18, 54, \dots$</p>
+                <p>Kalau kamu liat, dari $2$ ke $6$ itu dikali $3$. Dari $6$ ke $18$ juga dikali $3$. Nah, angka $3$ inilah yang kita sebut sebagai Rasio. Pertumbuhannya jauh lebih cepat dibanding aritmatika, kan?</p>
+            </div>
+        </div>
+
+        <div class="slide-content" id="slide-1">
+            <div class="slide-text">
+                <p><strong>Rumus Suku ke-n ($U_n$) Geometri</strong></p>
+                <p>Karena angkanya bisa jadi gede banget dengan cepat, kita butuh rumus biar nggak pusing ngitung manual. Ini dia rumusnya:</p>
+            </div>
+            
+            <div class="highlight-box">
+                <h3>💡 Penjabaran Rumus</h3>
+                <p style="font-size: 20px; font-weight: 600; text-align: center; margin: 20px 0;">$$U_n = a \cdot r^{(n-1)}$$</p>
+                <p><strong>Keterangannya:</strong></p>
+                <ul>
+                    <li><strong>$a$</strong> = Suku pertama (angka paling depan).</li>
+                    <li><strong>$r$</strong> = Rasio (cara nyarinya: $U_2 \div U_1$).</li>
+                    <li><strong>$n$</strong> = Urutan suku yang mau dicari.</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="slide-content" id="slide-2">
+            <div class="slide-text">
+                <p><strong>Contoh Biar Makin Paham</strong></p>
+                <p>Misal ada barisan: $1, 2, 4, 8, \dots$ dan kita mau cari <strong>suku ke-7 ($U_7$)</strong>.</p>
+            </div>
+
+            <div class="highlight-box">
+                <h3>💡 Penerapan Rumus Suku ke-n</h3>
+                <p><strong>Cari $a$:</strong> Angka pertamanya adalah $1$.</p>
+                <p><strong>Cari $r$:</strong> $2 \div 1 = 2$ (berarti rasionya $2$).</p>
+                <br>
+                <p><strong>Hitung $U_7$:</strong></p>
+                <p>$U_7 = 1 \cdot 2^{(7-1)}$</p>
+                <p>$U_7 = 1 \cdot 2^6$</p>
+                <p>$U_7 = 64$</p>
+                <br>
+                <p>Jadi, tanpa perlu nulis panjang-panjang, kita udah tau kalau angka ketujuh adalah <strong>64</strong>. Simple, kan?</p>
+            </div>
+        </div>
+
+        <div class="dots-container">
+            <div class="dot active"></div>
+            <div class="dot"></div>
+            <div class="dot"></div>
+        </div>
+
+        <div class="bottom-nav">
+            <button class="btn btn-back" id="btnBack">⬅ Kembali</button>
+            <button class="btn btn-next" id="btnNext">Selanjutnya ➡️</button>
+        </div>
+    </div>
+
+    <script>
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('.slide-content');
+        const dots = document.querySelectorAll('.dot');
+        const btnBack = document.getElementById('btnBack');
+        const btnNext = document.getElementById('btnNext');
+
+        function updateUI() {
+            // Hide all slides & remove active from dots
+            slides.forEach(slide => slide.classList.remove('active'));
+            dots.forEach(dot => dot.classList.remove('active'));
+
+            // Show current slide & activate dot
+            slides[currentSlide].classList.add('active');
+            dots[currentSlide].classList.add('active');
+
+            // Handle Back Button Text/Action
+            if (currentSlide === 0) {
+                btnBack.innerHTML = "⬅ Kembali ke Dashboard";
+            } else {
+                btnBack.innerHTML = "⬅ Sebelumnya";
+            }
+
+            // Handle Next Button Text/Action
+            if (currentSlide === slides.length - 1) {
+                btnNext.innerHTML = "Kerjakan Latihan Soal 📝";
+            } else {
+                btnNext.innerHTML = "Selanjutnya ➡️";
+            }
+        }
+
+        btnNext.addEventListener('click', () => {
+            if (currentSlide < slides.length - 1) {
+                currentSlide++;
+                updateUI();
+            } else {
+                // Pindah ke file latihan3.html jika ini slide terakhir
+                window.location.href = "latihan5.html";
+            }
+        });
+
+        btnBack.addEventListener('click', () => {
+            if (currentSlide > 0) {
+                currentSlide--;
+                updateUI();
+            } else {
+                // Kembali ke dashboard jika ini slide pertama
+                window.location.href = "dashboard.html";
+            }
+        });
+
+        // Initialize UI
+        updateUI();
+    </script>
+</body>
+</html>

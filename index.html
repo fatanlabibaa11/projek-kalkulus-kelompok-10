@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PolaPintar - Belajar Deret Bilangan</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="style.css">
+    <link rel="icon" href="https://cdn-icons-png.flaticon.com/512/330/330803.png" type="image/png">
+</head>
+<body>
+<div class="hiasan wajik-kiri"></div>
+    <div class="hiasan segitiga-kanan"></div>
+
+    <main class="main-container">
+        
+        <div class="logo">
+            <span class="pola">Pola</span><span class="pintar">Pintar</span>
+        </div>
+
+        <h1 class="headline">Kuasai Deret Bilangan dan Selangkah Lebih Pintar</h1>
+
+        <p class="description">Belajar barisan dan deret jadi lebih asyik dengan materi ringkas dan latihan soal interaktif.</p>
+
+        <div class="input-action-group">
+            <input type="text" id="namaInput" placeholder="Masukkan nama kamu di sini...">
+            
+            <button type="button" id="tombolMulai">
+                Mulai Belajar 
+                <span class="arrow">↗</span>
+            </button>
+        </div>
+
+        <img src="orang.png.png" alt="Ilustrasi sekelompok orang sedang belajar di meja" class="hero-image">
+
+    </main>
+
+  <footer class="bottom-bar"></footer>
+
+    <div id="popupPeringatan" class="popup-overlay">
+        <div class="popup-box">
+            <h3>Oops! 🙊</h3>
+            <p>Isi nama kamu dulu yuk biar kita bisa kenalan!</p>
+            <button id="tutupPopup" class="btn-tutup">Oke, siap!</button>
+        </div>
+    </div>
+
+    <<script>
+        // 1. Ambil elemen dari halaman (Otomatis nyari input dan tombolnya)
+        const inputNama = document.querySelector('input'); 
+        const btnMulai = document.querySelector('button'); // Asumsi ini tombol "Mulai Belajar"
+        const popup = document.getElementById('popupOverlay'); // Asumsi ini pop-up mu
+        const btnTutup = document.getElementById('tutupPopup');
+
+        // 2. Fungsi pindah halaman pas tombol diklik
+        btnMulai.addEventListener('click', function() {
+            const nama = inputNama.value;
+            if (nama.trim() === '') {
+                // Kalau nama kosong, munculin pop-up
+                if(popup) popup.classList.add('muncul'); 
+                else alert("Eh, namanya diisi dulu dong! 😅");
+            } else {
+                // Kalau nama ada, simpan dan pindah ke dashboard
+                localStorage.setItem('namaUser', nama);
+                window.location.href = 'dashboard.html';
+            }
+        });
+
+        // 3. Fungsi nutup pop-up
+        if(btnTutup && popup) {
+            btnTutup.addEventListener('click', function() {
+                popup.classList.remove('muncul');
+            });
+        }
+
+        // 4. FITUR BARU: Deteksi tombol Enter! 🔥
+        inputNama.addEventListener('keypress', function(event) {
+            // Kalau tombol yang ditekan adalah Enter
+            if (event.key === 'Enter') {
+                event.preventDefault(); // Mencegah layar ke-refresh sendiri
+                btnMulai.click(); // Suruh JavaScript "ngeklik" tombol mulai secara otomatis
+            }
+        });
+    </script>
+</body>
+</html>

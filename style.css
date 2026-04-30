@@ -1,0 +1,286 @@
+/* --- 1. Reset Dasar & Font --- */
+/* Kita pakai Google Fonts biar mirip. Silakan tambah font link di HTML kalau mau sempurna, tapi sementara pakai font dasar sans-serif dulu. */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box; /* Biar ukuran padding nggak nambah lebar elemen */
+    font-family: 'Poppins', sans-serif; /* Ini font yang bersih, mirip di gambar */
+}
+
+body {
+    background-color: #FDFBFA; /* Warna background krem muda yang ada di gambar */
+    display: flex;
+    justify-content: center; /* Konten di tengah secara horizontal */
+    align-items: center; /* Konten di tengah secara vertikal */
+    min-height: 100vh; /* Tinggi minimal satu layar penuh */
+    position: relative; /* Buat footer nanti */
+    overflow-x: hidden; /* Mencegah scrollbar horizontal jika ada elemen off-screen */
+}
+
+/* --- 2. Wadah Utama --- */
+.main-container {
+    max-width: 900px; /* Batasi lebar konten supaya rapi */
+    width: 90%; /* Supaya responsif di layar kecil */
+    text-align: center; /* Semua teks otomatis di tengah */
+    padding-bottom: 100px; /* Beri ruang di bawah sebelum footer */
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Elemen di tengah */
+}
+
+/* --- 3. Menghias Logo --- */
+.logo {
+    font-size: 28px;
+    font-weight: 700;
+    margin-bottom: 50px; /* Jarak ke bawah */
+}
+
+.logo .pola {
+    color: #5B8DF7; /* Biru di gambar */
+}
+
+.logo .pintar {
+    color: #FFAA01; /* Kuning/Oren di gambar */
+}
+
+/* --- 4. Menghias Teks Judul --- */
+.headline {
+    font-size: 40px; /* Ukuran besar */
+    color: #2E3A49; /* Warna abu-abu tua */
+    margin-bottom: 15px;
+    line-height: 1.3; /* Jarak antar baris */
+    max-width: 700px; /* Batasi lebar judul agar pecah barisnya rapi */
+}
+
+/* --- 5. Menghias Teks Penjelasan --- */
+.description {
+    font-size: 16px;
+    color: #808A95; /* Abu-abu lebih muda */
+    margin-bottom: 50px;
+    max-width: 600px;
+}
+
+/* --- 6. Kotak Input & Tombol (Ini yang paling unik) --- */
+.input-action-group {
+    background-color: #ffffff;
+    border: 1px solid #EAEAEA; /* Garis tepi tipis */
+    border-radius: 50px; /* Ujung super bulat (capsule shape) */
+    display: flex;
+    align-items: center;
+    padding: 10px 10px 10px 30px; /* Padding dalam: kiri besar, kanan kecil buat tombol */
+    margin-bottom: 60px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.03); /* Bayangan tipis biar ada efek timbul */
+    width: 100%;
+    max-width: 600px; /* Jangan terlalu lebar */
+}
+
+.input-action-group input {
+    border: none; /* Hilangkan garis default input */
+    outline: none; /* Hilangkan garis biru saat diklik */
+    flex-grow: 1; /* Ambil sisa ruang */
+    font-size: 16px;
+    color: #333;
+}
+
+.input-action-group input::placeholder {
+    color: #B2BECB; /* Warna teks placeholder */
+}
+
+.input-action-group button {
+    background-color: #FFB703; /* Warna kuning tombol */
+    color: #ffffff; /* Warna teks tombol */
+    border: none;
+    border-radius: 50px; /* Ujung tombol bulat */
+    padding: 15px 30px; /* Padding tombol */
+    font-weight: 600;
+    font-size: 16px;
+    cursor: pointer; /* Ubah kursor jadi tangan */
+    display: flex;
+    align-items: center;
+    transition: background 0.3s ease; /* Efek halus saat di-hover */
+}
+
+.input-action-group button:hover {
+    background-color: #E6A500; /* Warna sedikit gelap saat mouse di atasnya */
+}
+
+.input-action-group .arrow {
+    margin-left: 10px; /* Jarak ke kiri teks panah */
+    font-size: 18px;
+}
+
+/* --- 7. Menghias Gambar Ilustrasi --- */
+.hero-image {
+    max-width: 100%; /* Gambar tidak akan lebih lebar dari wadahnya */
+    height: auto; /* Jaga proporsi gambar */
+    display: block;
+    margin-top: auto; /* Gambar menempel di bawah container */
+}
+
+/* --- 8. Baris Hitam di Paling Bawah --- */
+.bottom-bar {
+    background-color: #000000;
+    height: 10px; /* Tipis saja */
+    width: 100%;
+    position: absolute; /* Tempelkan ke layar, bukan container */
+    bottom: 0;
+    left: 0;
+}
+/* --- 9. Hiasan Background Melayang --- */
+.hiasan {
+    position: absolute; /* Jurus sakti biar bisa melayang bebas */
+    z-index: -1; /* Angka minus ini ibarat kita taruh stikernya di *belakang* teks dan gambar */
+}
+
+/* Membuat bentuk wajik di sebelah kiri */
+.wajik-kiri {
+    width: 60px;
+    height: 60px;
+    background-color: #FFF4D2; /* Warna kuning pudar */
+    border-radius: 12px; /* Ujungnya agak tumpul */
+    transform: rotate(45deg); /* Kotaknya kita putar 45 derajat biar jadi wajik */
+    
+    /* Posisinya: */
+    top: 40%; /* Jarak dari atas layar */
+    left: 15%; /* Jarak dari kiri layar */
+}
+
+/* Membuat bentuk segitiga di sebelah kanan */
+/* Trik bikin segitiga di CSS agak unik, kita pakai border! */
+.segitiga-kanan {
+    width: 0;
+    height: 0;
+    border-left: 40px solid transparent;
+    border-right: 40px solid transparent;
+    border-bottom: 70px solid #FFF4D2; /* Warna kuning pudar */
+    
+    /* Posisinya: */
+    top: 30%; 
+    right: 15%; 
+    transform: rotate(15deg); /* Diputar dikit biar posisinya natural */
+}
+/* --- 10. Desain Pop-up Peringatan --- */
+
+/* Ini latar belakang gelapnya yang menutupi layar */
+.popup-overlay {
+    position: fixed; /* Jurus biar nempel menutupi seluruh layar */
+    top: 0; left: 0; width: 100%; height: 100%;
+    background: rgba(0, 0, 0, 0.4); /* Warna hitam transparan */
+    display: flex;
+    justify-content: center; /* Kotak di tengah */
+    align-items: center; /* Kotak di tengah */
+    z-index: 1000; /* Pastikan selalu paling atas, nutupin yang lain */
+    
+    /* Aturan untuk sembunyi di awal */
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease; /* Animasi halus selama 0.3 detik */
+}
+
+/* Ini kotak putihnya */
+.popup-box {
+    background: #ffffff;
+    padding: 30px 40px;
+    border-radius: 20px;
+    text-align: center;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+    
+    /* Posisi awal kotaknya agak turun ke bawah sedikit */
+    transform: translateY(30px);
+    transition: all 0.3s ease;
+}
+
+/* KELAS AJAIB: Kalau kita tambahin kelas ini lewat JS, pop-upnya muncul! */
+.popup-overlay.muncul {
+    opacity: 1;
+    visibility: visible;
+}
+
+.popup-overlay.muncul .popup-box {
+    transform: translateY(0); /* Kotaknya naik ke posisi aslinya */
+}
+
+/* Hiasan teks & tombol di dalam pop-up */
+.popup-box h3 { color: #2E3A49; margin-bottom: 10px; }
+.popup-box p { color: #808A95; margin-bottom: 20px; }
+
+.btn-tutup {
+    background-color: #5B8DF7; /* Warna biru biar kontras */
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 50px;
+    cursor: pointer;
+    font-weight: 600;
+    font-family: 'Poppins', sans-serif;
+}
+.btn-tutup:hover { background-color: #4A76D6; }
+/* --- 11. CSS Grid untuk Dashboard --- */
+.materi-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px; 
+    width: 100%;
+    max-width: 1000px;
+    margin: 0 auto;
+}
+
+.card {
+    background: #ffffff;
+    border: 1px solid #EAEAEA;
+    border-radius: 16px;
+    padding: 24px;
+    text-align: left;
+    display: flex;
+    flex-direction: column;
+    transition: all 0.3s ease;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0,0,0,0.05);
+}
+
+.card-header {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 16px;
+    font-size: 24px;
+}
+
+.card h3 {
+    font-size: 18px;
+    color: #2E3A49;
+    margin-bottom: 10px;
+}
+
+.card p {
+    font-size: 14px;
+    color: #808A95;
+    line-height: 1.5;
+    flex-grow: 1;
+    margin-bottom: 20px;
+}
+
+.card-footer {
+    font-size: 13px;
+    color: #A0AAB5;
+}
+
+.lock {
+    font-size: 16px;
+    color: #6c757d;
+}
+/* --- 12. Efek Kursor & Sistem Kunci --- */
+
+/* Kartu yang BISA diklik (tidak ada kelas .locked) */
+.card:not(.locked) {
+    cursor: pointer;
+}
+
+/* Kartu yang TERKUNCI (ada kelas .locked) */
+.card.locked {
+    opacity: 0.5; /* Warnanya agak pudar */
+    cursor: not-allowed; /* Kursor dilarang */
+    pointer-events: auto; /* Biar tetap bisa diklik untuk ngeluarin peringatan */
+}

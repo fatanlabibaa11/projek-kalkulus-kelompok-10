@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PolaPintar - Pembahasan Geometri</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    
+    <script>MathJax = { tex: { inlineMath: [['$', '$'], ['\\(', '\\)']] } };</script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+
+    <style>
+        body { margin: 0; font-family: 'Poppins', sans-serif; background-color: #FAFAFA; padding: 20px; color: #2E3A49; }
+        .container { max-width: 700px; margin: 0 auto; background: white; padding: 30px; border-radius: 16px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); }
+        h1 { color: #2E3A49; border-bottom: 3px solid #FFB800; display: block; text-align: center; padding-bottom: 15px; margin-bottom: 40px; }
+        .item-pembahasan { margin-bottom: 30px; padding-bottom: 20px; border-bottom: 1px solid #E2E8F0; }
+        .judul-soal { font-weight: 700; color: #2E3A49; margin-bottom: 15px; display: block; font-size: 18px; }
+        
+        /* Tema kotak pembahasan (Kuning #FFB800) */
+        .kotak-kunci { background: #FFFDF5; padding: 20px; border-radius: 12px; border-left: 5px solid #FFB800; line-height: 1.6; }
+        .teks-jawaban { color: #FFB800; font-weight: bold; } 
+        
+        /* Styling bagian bawah untuk tombol kembali */
+        .footer-pembahasan { text-align: center; margin-top: 40px; padding-top: 20px; }
+        .btn-kembali { display: inline-block; text-decoration: none; background: #F1F5F9; color: #64748B; padding: 12px 24px; border-radius: 12px; font-weight: 600; transition: 0.3s; }
+        .btn-kembali:hover { background: #E2E8F0; color: #2E3A49; transform: translateY(-2px); }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Pembahasan Geometri</h1>
+
+        <div class="item-pembahasan">
+            <span class="judul-soal">Soal 1: Istilah Perbandingan</span>
+            <div class="kotak-kunci">
+                Dalam barisan geometri, angka pengali atau pembagi yang besarnya selalu tetap antar suku disebut dengan rasio ($r$).<br><br>
+                <strong>Jawaban:</strong> <span class="teks-jawaban">C (Rasio)</span>
+            </div>
+        </div>
+
+        <div class="item-pembahasan">
+            <span class="judul-soal">Soal 2: Mencari Rasio</span>
+            <div class="kotak-kunci">
+                Untuk mencari rasio, bagilah suatu suku dengan suku sebelumnya. <br>
+                $r = \frac{6}{2} = 3$ atau $r = \frac{18}{6} = 3$.<br><br>
+                <strong>Jawaban:</strong> <span class="teks-jawaban">B ($3$)</span>
+            </div>
+        </div>
+
+        <div class="item-pembahasan">
+            <span class="judul-soal">Soal 3: Menghitung $U_4$</span>
+            <div class="kotak-kunci">
+                Diketahui $a = 5$ dan $r = 2$. <br>
+                $U_4 = a \cdot r^{4-1} = 5 \cdot 2^3 = 5 \cdot 8 = 40$.<br><br>
+                <strong>Jawaban:</strong> <span class="teks-jawaban">C ($40$)</span>
+            </div>
+        </div>
+
+        <div class="item-pembahasan">
+            <span class="judul-soal">Soal 4: Rumus Umum</span>
+            <div class="kotak-kunci">
+                Rumus untuk mencari suku ke-$n$ dari barisan geometri adalah $U_n = a \cdot r^{n-1}$.<br><br>
+                <strong>Jawaban:</strong> <span class="teks-jawaban">B ($U_n = a \cdot r^{n-1}$)</span>
+            </div>
+        </div>
+
+        <div class="item-pembahasan">
+            <span class="judul-soal">Soal 5: Menentukan Suku Pertama</span>
+            <div class="kotak-kunci">
+                Suku pertama ($a$) adalah angka yang berada di urutan paling depan dalam barisan, yaitu $32$.<br><br>
+                <strong>Jawaban:</strong> <span class="teks-jawaban">A ($32$)</span>
+            </div>
+        </div>
+
+        <div class="footer-pembahasan">
+            <a href="latihan3.html" class="btn-kembali">⬅️ Kembali ke Hasil Kuis</a>
+        </div>
+    </div>
+</body>
+</html>

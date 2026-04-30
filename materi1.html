@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PolaPintar - Fondasi Bilangan</title>
+    <link rel="icon" href="https://cdn-icons-png.flaticon.com/512/330/330803.png" type="image/png">
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    
+    <style>
+        /* Desain Artikel */
+        .artikel-container {
+            max-width: 800px;
+            margin: 0 auto;
+            text-align: left;
+            padding: 40px 20px;
+        }
+        .breadcrumb { font-size: 14px; color: #64748B; margin-bottom: 20px; }
+        .judul-materi { font-size: 36px; color: #2E3A49; margin-bottom: 30px; }
+        
+        /* === CSS KHUSUS SLIDER MATERI === */
+        .slider-wrapper {
+            position: relative;
+            min-height: 250px; /* Biar tingginya nggak lompat-lompat banget */
+        }
+        
+        .slide {
+            display: none; /* Sembunyikan semua slide awalnya */
+            animation: geserMulus 0.4s ease-in-out; /* Efek transisi */
+        }
+        
+        .slide.aktif {
+            display: block; /* Cuma slide yang ada class 'aktif' yang muncul */
+        }
+
+        .slide p {
+            color: #475569;
+            line-height: 1.8;
+            font-size: 16px;
+            margin-bottom: 20px;
+        }
+
+        /* Animasi Pas Pindah Slide */
+        @keyframes geserMulus {
+            from { opacity: 0; transform: translateX(20px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+
+        /* Titik-titik Bawah (Dots) */
+        .dots-container {
+            text-align: center;
+            margin-top: 30px;
+        }
+        
+        .dot {
+            height: 12px;
+            width: 12px;
+            margin: 0 6px;
+            background-color: rgba(46, 58, 73, 0.2); /* Warna transparan */
+            border-radius: 50%;
+            display: inline-block;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .dot.aktif {
+            background-color: #FFB800; /* Warna kuning pas aktif */
+            width: 30px; /* Lebarin dikit bentuknya jadi kayak pil */
+            border-radius: 8px;
+        }
+
+        /* Tombol Navigasi Bawah */
+        .nav-bawah {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 40px;
+        }
+
+        .btn-nav {
+            background-color: #F1F5F9;
+            color: #475569;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 8px;
+            font-family: 'Poppins', sans-serif;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+        
+        .btn-nav:hover { background-color: #E2E8F0; }
+
+        .btn-latihan {
+            background-color: #FFB800;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            font-size: 16px;
+            font-family: 'Poppins', sans-serif;
+            font-weight: 600;
+            border-radius: 8px;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(255, 184, 0, 0.3);
+            transition: 0.3s;
+            display: none; /* Sembunyikan di awal, muncul di akhir */
+        }
+        .btn-latihan:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(255, 184, 0, 0.4);
+        }
+    </style>
+</head>
+<body>
+    <main class="artikel-container">
+        
+        <div class="logo" style="text-align: center; margin-bottom: 50px;">
+            <span class="pola">Pola</span><span class="pintar">Pintar</span>
+        </div>
+
+        <div class="breadcrumb">
+            Materi > <strong style="color: #FFB800;">Fondasi Bilangan</strong>
+        </div>
+
+        <h1 class="judul-materi">Fondasi Bilangan</h1>
+
+        <div class="slider-wrapper">
+            
+            <div class="slide aktif">
+                <h3 style="color: #2E3A49; margin-bottom: 10px;">1. Apa sih Barisan itu?</h3>
+                <p>Sederhananya, barisan itu kumpulan angka yang dijajalin tapi punya "aturan" atau pola tertentu. Angka-angka di dalamnya kita sebut sebagai Suku..</p>
+                <p> Suku pertama dilambangkan dengan U<sub>1</sub> dan suku kedua adalah U<sub>2</sub>, dan seterusnya. </p>
+            </div>
+
+            <div class="slide">
+                <h3 style="color: #2E3A49; margin-bottom: 15px;">Mengenal Jenis Pola</h3>
+                
+                <ul style="color: #475569; font-size: 16px; line-height: 1.8; padding-left: 20px;">
+                    
+                    <li style="margin-bottom: 20px;">
+                        <strong>Pola Tambah/Kurang (Selisih):</strong><br>
+                        Coba liat barisan ini: 5, 8, 11, 14... <br>
+                        Kalau kamu perhatiin, setiap angka ke angka berikutnya itu selalu "loncat" +3 kan? Nah, selisih yang tetep ini yang bakal jadi dasar kita nanti.
+                    </li>
+
+                    <li>
+                        <strong>Pola Kali/Bagi (Rasio):</strong><br>
+                        Gimana kalau: 3, 6, 12, 24... <br>
+                        Bukan ditambah, tapi dikali 2. Pola ini pertumbuhannya jauh lebih cepet, kayak <em>snowball effect</em>.
+                    </li>
+
+                </ul>
+            </div>
+
+           <div class="slide">
+                <h3 style="color: #2E3A49; margin-bottom: 15px;">1. Definisi Variabel</h3>
+                
+                <ul style="color: #475569; font-size: 16px; line-height: 1.8; padding-left: 20px;">
+                    <li style="margin-bottom: 15px;">
+                        <em>n</em> <strong>(Indeks):</strong> Menyatakan posisi atau urutan bilangan dalam barisan (<em>n</em> = 1, 2, 3, ...). Nilai <em>n</em> harus berupa bilangan bulat positif.
+                    </li>
+                    <li style="margin-bottom: 20px;">
+                        <em>U<sub>n</sub></em> <strong>(Suku ke-n):</strong> Menyatakan nilai dari bilangan yang berada pada posisi ke-<em>n</em> tersebut.
+                    </li>
+                </ul>
+
+                <div style="background-color: #F8FAFC; padding: 15px 20px; border-left: 4px solid #FFB800; border-radius: 4px; margin-top: 10px;">
+                    <h4 style="color: #2E3A49; margin-bottom: 10px; font-size: 16px;">💡 Penerapan Rumus Suku ke-n</h4>
+                    <p style="color: #475569; font-size: 15px; line-height: 1.8; margin-bottom: 0;">
+                        Misalkan kita punya rumus mesin pembuat angka: <strong>U<sub>n</sub> = 2n + 1</strong>.<br>
+                        Jika kita ingin mencari suku ke-3 (artinya <em>n</em> = 3), kita tinggal mengganti huruf <em>n</em> dengan angka 3:<br><br>
+                        U<sub>3</sub> = 2(3) + 1 <br>
+                        U<sub>3</sub> = 6 + 1 = <strong>7</strong> <br><br>
+                        Jadi, bilangan yang berada di urutan ke-3 adalah <strong>7</strong>!
+                    </p>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="dots-container">
+            <span class="dot aktif" onclick="pindahSlide(0)"></span>
+            <span class="dot" onclick="pindahSlide(1)"></span>
+            <span class="dot" onclick="pindahSlide(2)"></span>
+        </div>
+
+        <div class="nav-bawah">
+            <button id="btnKembali" class="btn-nav" onclick="gantiSlide(-1)" style="visibility: hidden;">⬅️ Kembali</button>
+            <button id="btnLanjut" class="btn-nav" onclick="gantiSlide(1)">Lanjut ➡️</button>
+            <button id="btnLatihan" class="btn-latihan">Kerjakan Latihan Soal 📝</button>
+        </div>
+        </main>
+
+    <script>
+        let indexSlideSekarang = 0;
+        const slides = document.querySelectorAll(".slide");
+        const dots = document.querySelectorAll(".dot");
+        const btnKembali = document.getElementById("btnKembali");
+        const btnLanjut = document.getElementById("btnLanjut");
+        const btnLatihan = document.getElementById("btnLatihan");
+
+        // Fungsi utama untuk mengatur mana yang muncul dan sembunyi
+        function aturTampilanSlide(n) {
+            // 1. Bersihkan semua status 'aktif' dari slide dan dot
+            slides.forEach(slide => slide.classList.remove("aktif"));
+            dots.forEach(dot => dot.classList.remove("aktif"));
+
+            // 2. Tambahkan status 'aktif' ke slide dan dot yang dipilih
+            slides[n].classList.add("aktif");
+            dots[n].classList.add("aktif");
+
+            // 3. Atur kemunculan tombol Kembali
+            if (n === 0) {
+                btnKembali.style.visibility = "hidden"; // Sembunyikan kalau di awal
+            } else {
+                btnKembali.style.visibility = "visible";
+            }
+
+            // 4. Atur kemunculan tombol Lanjut vs Latihan Soal
+            if (n === slides.length - 1) {
+                // Kalau di slide paling akhir
+                btnLanjut.style.display = "none";
+                btnLatihan.style.display = "inline-block";
+            } else {
+                // Kalau belum di akhir
+                btnLanjut.style.display = "inline-block";
+                btnLatihan.style.display = "none";
+            }
+        }
+
+        // Fungsi kalau tombol Lanjut/Kembali diklik
+        function gantiSlide(angka) {
+            indexSlideSekarang += angka;
+            aturTampilanSlide(indexSlideSekarang);
+        }
+
+        // Fungsi kalau titik dot diklik
+        function pindahSlide(angka) {
+            indexSlideSekarang = angka;
+            aturTampilanSlide(indexSlideSekarang);
+        }
+
+        // Panggil fungsi ini pas halaman pertama kali dibuka biar rapi
+        aturTampilanSlide(indexSlideSekarang);
+
+       // Fungsi tombol latihan soal
+        btnLatihan.addEventListener('click', function() {
+            window.location.href = 'latihan1.html';
+        });
+    </script>
+</body>
+</html>

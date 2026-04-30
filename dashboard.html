@@ -1,0 +1,610 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PolaPintar - Dashboard Belajar</title>
+    <link rel="icon" href="https://cdn-icons-png.flaticon.com/512/330/330803.png" type="image/png">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="style.css">
+
+    <style>
+        /* Variabel Dark Mode (Menimpa warna di style.css) */
+        body.dark-mode {
+            background-color: #121212 !important;
+            color: #E0E0E0 !important;
+        }
+
+        body.dark-mode .card,
+        body.dark-mode .popup-box {
+            background-color: #1E1E1E !important;
+            border-color: #333333 !important;
+            color: #E0E0E0 !important;
+            box-shadow: 0 8px 24px rgba(255, 255, 255, 0.05) !important;
+        }
+
+        body.dark-mode h1,
+        body.dark-mode h2,
+        body.dark-mode h3 {
+            color: #FFFFFF !important;
+        }
+
+        body.dark-mode .card-footer,
+        body.dark-mode .card p {
+            color: #A0AEC0 !important;
+        }
+
+        /* Tombol Switch Dark Mode */
+        .theme-switch-wrapper {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 1001;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: white;
+            padding: 10px 15px;
+            border-radius: 50px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            border: 1px solid #E2E8F0;
+        }
+
+        body.dark-mode .theme-switch-wrapper {
+            background: #1E1E1E;
+            border-color: #333;
+            color: white;
+        }
+
+        .theme-switch {
+            display: inline-block;
+            height: 24px;
+            position: relative;
+            width: 50px;
+        }
+
+        .theme-switch input {
+            display: none;
+        }
+
+        .slider {
+            background-color: #ccc;
+            bottom: 0;
+            cursor: pointer;
+            left: 0;
+            position: absolute;
+            right: 0;
+            top: 0;
+            transition: .4s;
+            border-radius: 34px;
+        }
+
+        .slider:before {
+            background-color: #fff;
+            bottom: 4px;
+            content: "";
+            height: 16px;
+            left: 4px;
+            position: absolute;
+            transition: .4s;
+            width: 16px;
+            border-radius: 50%;
+        }
+
+        input:checked+.slider {
+            background-color: #FFB800;
+        }
+
+        input:checked+.slider:before {
+            transform: translateX(26px);
+        }
+
+        /* RPG Loading Screen */
+        #loading-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: #000000;
+            color: #FFB800;
+            z-index: 9999;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            font-family: 'Press Start 2P', cursive;
+            transition: opacity 0.5s ease-out, visibility 0.5s;
+        }
+
+        .loading-text {
+            font-size: 14px;
+            text-align: center;
+            line-height: 2;
+            margin-bottom: 20px;
+            animation: blink 1s infinite;
+            text-shadow: 2px 2px #886600;
+        }
+
+        .rpg-bar-container {
+            width: 300px;
+            height: 20px;
+            border: 4px solid #FFB800;
+            padding: 2px;
+            background: #333;
+        }
+
+        .rpg-bar-fill {
+            height: 100%;
+            background-color: #FFB800;
+            width: 0%;
+            transition: width 0.1s linear;
+        }
+
+        @keyframes blink {
+            50% {
+                opacity: 0;
+            }
+        }
+
+        /* --- TAMBAHAN CSS: Avatar & Pilihan Karakter --- */
+        .avatar-profil {
+            width: 90px;
+            height: 90px;
+            /* Diperbesar dari 70px */
+            border-radius: 50%;
+            object-fit: cover;
+            border: 3px solid #FFB800;
+            box-shadow: 0 4px 10px rgba(255, 184, 0, 0.3);
+            display: none;
+            background-color: #ffffff;
+        }
+
+        .karakter-grid {
+            display: flex;
+            gap: 25px;
+            /* Jarak antar karakter diperbesar */
+            justify-content: center;
+            margin-top: 30px;
+            flex-wrap: wrap;
+        }
+
+        .char-option {
+            width: 130px;
+            height: 130px;
+            /* Gambar diperbesar drastis */
+            border-radius: 20px;
+            object-fit: cover;
+            border: 4px solid #E2E8F0;
+            cursor: pointer;
+            transition: 0.3s;
+            background-color: #ffffff;
+        }
+
+        .char-option:hover {
+            transform: translateY(-8px) scale(1.1);
+            /* Animasi melayang lebih tinggi */
+            border-color: #FFB800;
+            box-shadow: 0 8px 20px rgba(255, 184, 0, 0.5);
+        }
+
+        body.dark-mode .avatar-profil,
+        body.dark-mode .char-option {
+            background-color: #1E1E1E;
+            border-color: #333;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="loading-screen">
+        <div class="loading-text" id="rpg-text">Entering the Math Dungeon...</div>
+        <div class="rpg-bar-container">
+            <div class="rpg-bar-fill" id="rpg-bar"></div>
+        </div>
+    </div>
+
+    <div class="theme-switch-wrapper">
+        <span style="font-size: 18px;">☀️</span>
+        <label class="theme-switch" for="checkbox">
+            <input type="checkbox" id="checkbox" />
+            <div class="slider"></div>
+        </label>
+        <span style="font-size: 18px;">🌙</span>
+    </div>
+
+    <div class="hiasan wajik-kiri"></div>
+    <div class="hiasan segitiga-kanan"></div>
+
+    <main class="main-container">
+        <div class="header-top"
+            style="display: flex; justify-content: space-between; align-items: center; width: 100%; max-width: 1000px; margin-bottom: 40px; margin-top: 20px;">
+            <div class="logo" style="margin-bottom: 0;">
+                <span class="pola">Pola</span><span class="pintar">Pintar</span>
+            </div>
+            
+            <div style="display: flex; gap: 15px; align-items: center;">
+                
+                <a href="about.html" 
+                    style="padding: 8px 20px; font-size: 14px; background-color: #38C976; border-radius: 12px; color: white; text-decoration: none; font-weight: 600; display: flex; align-items: center; transition: 0.3s; box-shadow: 0 4px 10px rgba(56, 201, 118, 0.3);">
+                    👥 Profil Tim
+                </a>
+
+                <button id="btnKeluar" class="btn-tutup"
+                    style="padding: 8px 20px; font-size: 14px; background-color: #FF5A79; border-radius: 12px; color: white; border: none; cursor: pointer; font-weight: 600;">
+                    Keluar 👋
+                </button>
+
+            </div>
+        </div>
+
+        <div style="display: flex; align-items: center; gap: 20px; margin-bottom: 10px;">
+            <img id="avatarTampil" src="" alt="Avatar Jagoan" class="avatar-profil">
+            <h1 class="headline" style="font-size: 36px; margin: 0;">Halo, <span id="namaTampil">Siswa</span>!</h1>
+        </div>
+
+        <h2 class="headline" style="font-size: 28px; margin-bottom: 50px;">Siap lanjut belajar hari ini?</h2>
+
+        <div class="materi-grid">
+            <div class="card" id="materi-1">
+                <div class="card-header">
+                    <span class="icon" style="color: #FF5A79;">🎯</span>
+                </div>
+                <h3>Fondasi Bilangan</h3>
+                <p>Mengenal barisan dan cara kerja rumus suku ke-n.</p>
+                <div class="card-footer">Materi ke-1</div>
+            </div>
+
+            <div class="card locked" id="materi-2">
+                <div class="card-header">
+                    <span class="icon" style="color: #FFB800;">⊕</span>
+                    <span class="lock" id="gembok-2">🔒</span>
+                </div>
+                <h3>Barisan Aritmatika</h3>
+                <p>Belajar pola angka yang melompat dengan selisih tetap.</p>
+                <div class="card-footer">Materi ke-2</div>
+            </div>
+
+            <div class="card locked" id="materi-3">
+                <div class="card-header">
+                    <span class="icon" style="color: #38C976;">⊗</span>
+                    <span class="lock">🔒</span>
+                </div>
+                <h3>Barisan Geometri</h3>
+                <p>Eksplorasi angka yang tumbuh melalui perkalian rasio yang konsisten.</p>
+                <div class="card-footer">Materi ke-3</div>
+            </div>
+
+            <div class="card locked" id="materi-4">
+                <div class="card-header">
+                    <span class="icon" style="color: #5B8DF7;">∑</span>
+                    <span class="lock">🔒</span>
+                </div>
+                <h3>Deret Aritmatika</h3>
+                <p>Hitung total jumlah dari suku-suku pada barisan aritmatika.</p>
+                <div class="card-footer">Materi ke-4</div>
+            </div>
+
+            <div class="card locked" id="materi-5">
+                <div class="card-header">
+                    <span class="icon" style="color: #A370F7;">⚄</span>
+                    <span class="lock">🔒</span>
+                </div>
+                <h3>Deret Geometri</h3>
+                <p>Temukan cara efisien menjumlahkan angka dengan pola perkalian.</p>
+                <div class="card-footer">Materi ke-5</div>
+            </div>
+
+            <div class="card locked" id="materi-6">
+                <div class="card-header">
+                    <span class="icon" style="color: #2E3A49;">∞</span>
+                    <span class="lock">🔒</span>
+                </div>
+                <h3>Konvergen & Divergen</h3>
+                <p>Memahami batas akhir dari deret tak hingga.</p>
+                <div class="card-footer">Materi ke-6</div>
+            </div>
+        </div>
+    </main>
+
+    <div id="popupKarakter" class="popup-overlay">
+        <div class="popup-box" style="max-width: 700px; padding: 40px; text-align: center;">
+            <h3 style="color: #FFB800; font-family: 'Press Start 2P', cursive; font-size: 18px; line-height: 1.5;">Pilih
+                karaktermu</h3>
+
+            <div class="karakter-grid">
+                <img src="itebe.png" class="char-option" onclick="pilihKarakter('itebe.png')" alt="Kampus ITB">
+                <img src="ugm.png" class="char-option" onclick="pilihKarakter('ugm.png')" alt="Kampus UGM">
+                <img src="telkom.png" class="char-option" onclick="pilihKarakter('telkom.png')" alt="Kampus Telkom">
+                <img src="ga terkenal.png" class="char-option" onclick="pilihKarakter('ga terkenal.png')"
+                    alt="Kampus Lainnya">
+            </div>
+        </div>
+    </div>
+
+    <div id="popupDashboard" class="popup-overlay">
+        <div class="popup-box">
+            <h3 id="popupJudul">Pesan</h3>
+            <p id="popupPesan">Isi pesan di sini.</p>
+            <button id="tutupPopupDash" class="btn-tutup">Oke, ngerti!</button>
+        </div>
+    </div>
+
+   <script>
+        // --- LOGIKA RPG LOADING SCREEN ---
+        const rpgPhrases = ["Memasuki Dungeon Matematika...", "Mengumpulkan Energi...", "Menajamkan Pensil...", "Memuat Rumus Rahasia...", "Menghindari Naga Angka..."];
+        document.getElementById('rpg-text').innerText = rpgPhrases[Math.floor(Math.random() * rpgPhrases.length)];
+
+        const barFill = document.getElementById('rpg-bar');
+        let width = 0;
+        const loadingInterval = setInterval(() => {
+            if (width >= 100) clearInterval(loadingInterval);
+            else { width += 2; barFill.style.width = width + '%'; }
+        }, 20);
+
+        window.addEventListener('load', function () {
+            barFill.style.width = '100%';
+            setTimeout(() => {
+                const loader = document.getElementById('loading-screen');
+                loader.style.opacity = '0';
+                setTimeout(() => loader.style.visibility = 'hidden', 500);
+            }, 500);
+        });
+
+        // --- LOGIKA DARK MODE ---
+        const toggleSwitch = document.querySelector('.theme-switch input[type="checkbox"]');
+        const currentTheme = localStorage.getItem('theme');
+
+        if (currentTheme) {
+            document.body.classList.add(currentTheme);
+            if (currentTheme === 'dark-mode') toggleSwitch.checked = true;
+        }
+
+        toggleSwitch.addEventListener('change', function (e) {
+            if (e.target.checked) {
+                document.body.classList.add('dark-mode');
+                localStorage.setItem('theme', 'dark-mode');
+            } else {
+                document.body.classList.remove('dark-mode');
+                localStorage.setItem('theme', 'light-mode');
+            }
+        });
+
+        // --- LOGIKA PEMILIHAN KARAKTER ---
+        const avatarTampil = document.getElementById('avatarTampil');
+        const popupKarakter = document.getElementById('popupKarakter');
+        const karakterSimpanan = localStorage.getItem('karakterUser');
+
+        setTimeout(() => {
+            if (karakterSimpanan) {
+                avatarTampil.src = karakterSimpanan;
+                avatarTampil.style.display = 'block';
+            } else {
+                popupKarakter.classList.add('muncul');
+            }
+        }, 1200);
+
+        function pilihKarakter(srcGambar) {
+            localStorage.setItem('karakterUser', srcGambar);
+            avatarTampil.src = srcGambar;
+            avatarTampil.style.display = 'block';
+            popupKarakter.classList.remove('muncul');
+        }
+
+        // --- LOGIKA ASLI DASHBOARD KAMU ---
+        const namaSimpanan = localStorage.getItem('namaUser');
+        if (namaSimpanan) document.getElementById('namaTampil').innerText = namaSimpanan;
+
+        document.getElementById('btnKeluar').addEventListener('click', function () {
+            localStorage.removeItem('namaUser');
+            localStorage.removeItem('progressMateri');
+            localStorage.removeItem('karakterUser');
+            window.location.href = 'index.html';
+        });
+
+        const popupDash = document.getElementById('popupDashboard');
+        const judulDash = document.getElementById('popupJudul');
+        const pesanDash = document.getElementById('popupPesan');
+        const btnTutupDash = document.getElementById('tutupPopupDash');
+
+        function munculkanPopup(judul, pesan) {
+            judulDash.innerText = judul; pesanDash.innerText = pesan; popupDash.classList.add('muncul');
+        }
+
+        btnTutupDash.addEventListener('click', () => popupDash.classList.remove('muncul'));
+
+        // --- SISTEM UNLOCK MATERI DINAMIS (YANG BARU & FIX BUG) ---
+        let progress = localStorage.getItem('progressMateri') || 'baru-mulai';
+        
+        // Tentukan level saat ini berdasarkan progress
+        let level = 1;
+        if (progress === 'lulus-materi-1') level = 2;
+        if (progress === 'lulus-materi-2') level = 3;
+        if (progress === 'lulus-materi-3') level = 4;
+        if (progress === 'lulus-materi-4') level = 5;
+        if (progress === 'lulus-materi-5') level = 6;
+        if (progress === 'tamat') level = 7;
+
+        // Fungsi untuk membuka gembok secara visual
+        function bukaGembok(idMateri) {
+            const elemen = document.getElementById(idMateri);
+            if (elemen) {
+                elemen.classList.remove('locked');
+                const ikonLock = elemen.querySelector('.lock');
+                if (ikonLock) ikonLock.style.display = 'none';
+            }
+        }
+
+        // Buka gembok berdasarkan level secara otomatis
+        if (level >= 2) bukaGembok('materi-2');
+        if (level >= 3) bukaGembok('materi-3');
+        if (level >= 4) bukaGembok('materi-4');
+        if (level >= 5) bukaGembok('materi-5');
+        if (level >= 6) bukaGembok('materi-6');
+
+        // Navigasi Materi (Cek level sebelum pindah halaman)
+        document.getElementById('materi-1').addEventListener('click', () => window.location.href = 'materi1.html');
+        
+        document.getElementById('materi-2').addEventListener('click', () => {
+            if (level >= 2) window.location.href = 'materi2.html';
+            else munculkanPopup("Oops! 🔒", "Selesaikan 'Fondasi Bilangan' dulu ya buat buka kunci ini!");
+        });
+
+        document.getElementById('materi-3').addEventListener('click', () => {
+            if (level >= 3) window.location.href = 'materi3.html';
+            else munculkanPopup("Oops! 🔒", "Selesaikan 'Barisan Aritmatika' dulu!");
+        });
+
+        document.getElementById('materi-4').addEventListener('click', () => {
+            if (level >= 4) window.location.href = 'materi4.html';
+            else munculkanPopup("Masih Terkunci 🔒", "Selesaikan 'Barisan Geometri' dulu ya!");
+        });
+
+        document.getElementById('materi-5').addEventListener('click', () => {
+            if (level >= 5) window.location.href = 'materi5.html';
+            else munculkanPopup("Masih Terkunci 🔒", "Selesaikan Materi 4 dulu ya biar gemboknya kebuka.");
+        });
+
+        document.getElementById('materi-6').addEventListener('click', () => {
+            if (level >= 6) window.location.href = 'materi6.html';
+            else munculkanPopup("Masih Terkunci 🔒", "Ini materi terakhir! Selesaikan Materi 5 dulu ya.");
+        });
+    </script>
+    <style>
+    /* Background gelap di belakang popup */
+    .popup-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(15, 23, 42, 0.8); z-index: 9999; display: flex; justify-content: center; align-items: center; opacity: 0; visibility: hidden; transition: 0.4s; padding: 20px;}
+    .popup-overlay.show { opacity: 1; visibility: visible; }
+    
+    /* Kotak Popup */
+    .popup-card { background: #fff; padding: 40px; border-radius: 16px; text-align: center; max-width: 400px; width: 100%; box-shadow: 0 10px 30px rgba(0,0,0,0.2); transform: scale(0.8); transition: 0.4s; font-family: 'Poppins', sans-serif;}
+    .popup-overlay.show .popup-card { transform: scale(1); }
+    
+    .popup-title { font-size: 24px; font-weight: 700; color: #1E293B; margin-bottom: 10px; }
+    .popup-desc { font-size: 15px; color: #64748B; margin-bottom: 25px; line-height: 1.5;}
+
+    /* Efek Transisi Foto */
+    .img-container { position: relative; width: 250px; height: 250px; margin: 0 auto 25px; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 15px rgba(0,0,0,0.1); background: #F8FAFC; }
+    .img-container img { position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; transition: opacity 2s ease-in-out; /* Durasi transisi 2 detik */ }
+    
+    .img-foto2 { opacity: 0; } /* Stiker awalnya tembus pandang */
+    
+    /* Trigger transisi saat class ditambahkan via Javascript */
+    .img-container.transition-active .img-foto1 { opacity: 0; }
+    .img-container.transition-active .img-foto2 { opacity: 1; }
+
+    /* Desain Tombol */
+    .btn-download { display: none; width: 100%; padding: 15px; background: #FFB800; color: #fff; border-radius: 8px; text-decoration: none; font-weight: 600; margin-bottom: 15px; font-size: 15px; transition: 0.2s;}
+    .btn-download:hover { background: #F59E0B; }
+    .btn-close-popup { display: block; width: 100%; padding: 15px; background: transparent; border: 1px solid #1E293B; color: #1E293B; border-radius: 8px; font-weight: 600; cursor: pointer; font-size: 15px; font-family: 'Poppins', sans-serif;}
+    .btn-close-popup:hover { background: #F1F5F9; }
+</style>
+
+<div class="popup-overlay" id="rewardPopup">
+    <div class="popup-card">
+        <div class="popup-title">Selamat! 🎓🎉</div>
+        <div class="popup-desc">Kamu berhasil menyelesaikan semua level! Ini hadiah spesial buat kamu.</div>
+        
+        <div class="img-container" id="imgTransitionContainer">
+            <img src="acep.b.jpeg" alt="Foto Asli" class="img-foto1">
+            <img src="acep.a.jpeg" alt="Foto Stiker" class="img-foto2">
+        </div>
+
+        <a href="acep.a.jpeg" download="Wallpaper_Stiker_Keren.jpeg" class="btn-download" id="btnDownload">⬇️ Download Wallpaper</a>
+        <button class="btn-close-popup" onclick="tutupPopup()">Nanti Saja</button>
+    </div>
+</div>
+
+<script>
+    // Tambahkan script ini ke dalam event window.onload atau di luar kalau sudah punya
+    document.addEventListener("DOMContentLoaded", function() {
+        
+        // Cek apakah user sudah lulus level terakhir (Materi 6)
+        if (localStorage.getItem('progressMateri') === 'lulus-materi-6') {
+            
+            // Cek biar pop-up nggak muncul berulang kali setiap buka dashboard
+            if (!localStorage.getItem('rewardClaimed')) {
+                
+                // Munculkan popup dengan jeda sedikit biar smooth
+                setTimeout(() => {
+                    document.getElementById('rewardPopup').classList.add('show');
+                    
+                    // Jalankan animasi transisi setelah popup muncul 1.5 detik
+                    setTimeout(() => {
+                        document.getElementById('imgTransitionContainer').classList.add('transition-active');
+                        
+                        // Munculkan tombol download setelah transisi fotonya selesai
+                        setTimeout(() => {
+                            document.getElementById('btnDownload').style.display = 'block';
+                        }, 2000); // 2000ms = 2 detik sesuai durasi transisi CSS
+                        
+                    }, 1500); 
+
+                }, 500); 
+            }
+        }
+    });
+
+    function tutupPopup() {
+        document.getElementById('rewardPopup').classList.remove('show');
+        // Kunci pop-up agar kalau user refresh dashboard, dia nggak nongol lagi
+        localStorage.setItem('rewardClaimed', 'true');
+    }
+</script>
+<input type="text" id="cheatBox" placeholder="secret..." autocomplete="off">
+
+<style>
+    /* Desain Kotak Transparan di Pojok Kiri Bawah */
+    #cheatBox {
+        position: fixed;
+        bottom: 20px; 
+        left: 20px;
+        background: rgba(255, 255, 255, 0.05); /* Sangat transparan */
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        color: rgba(255, 255, 255, 0.3); /* Teks samar */
+        padding: 8px 12px;
+        border-radius: 6px;
+        width: 80px;
+        z-index: 9999;
+        outline: none;
+        transition: 0.3s;
+        font-family: 'Poppins', sans-serif;
+        font-size: 12px;
+    }
+
+    /* Kalau kotaknya diklik, warnanya jadi lebih jelas */
+    #cheatBox:focus {
+        background: rgba(255, 255, 255, 0.9);
+        color: #1E293B;
+        width: 120px;
+    }
+</style>
+
+<script>
+    // Logika buat ngebaca ketikan cheat-nya
+    document.getElementById('cheatBox').addEventListener('input', function() {
+        // Cek kalau ketikannya pas banget "infor123"
+        if (this.value === 'infor123') {
+            
+            // Aktifkan jalan ninja
+            localStorage.setItem('progressMateri', 'lulus-materi-6');
+            localStorage.removeItem('rewardClaimed');
+            
+            // Kasih notif alert biar kerasa feel cheat-nya
+            alert('🔓 Cheat Activated! Semua level berhasil dibuka.');
+            
+            // Kosongkan kotak dan refresh halaman otomatis
+            this.value = '';
+            window.location.reload();
+        }
+    });
+</script>
+</body>
+
+</html>

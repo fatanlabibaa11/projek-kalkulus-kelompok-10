@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PolaPintar - Latihan Barisan Aritmatika</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    
+    <script>MathJax = { tex: { inlineMath: [['$', '$'], ['\\(', '\\)']] } };</script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+
+    <style>
+        body { margin: 0; font-family: 'Poppins', sans-serif; background-color: #FAFAFA; color: #2E3A49; }
+        .kuis-container { max-width: 700px; margin: 40px auto; padding: 30px; background: white; border-radius: 16px; box-shadow: 0 10px 30px rgba(0,0,0,0.05); }
+        .header-kuis { text-align: center; margin-bottom: 30px; border-bottom: 2px dashed #E2E8F0; padding-bottom: 20px; }
+        .soal-teks { font-size: 18px; line-height: 1.6; margin-bottom: 25px; font-weight: 600; }
+        .opsi-list { display: flex; flex-direction: column; gap: 12px; }
+        .opsi-item { padding: 15px 20px; border: 2px solid #E2E8F0; border-radius: 10px; cursor: pointer; transition: 0.2s; font-size: 16px; }
+        .opsi-item:hover { border-color: #FFB800; background-color: #FFFDF5; }
+        .opsi-item.terpilih { border-color: #FFB800; background-color: #FFB800; color: white; font-weight: bold; }
+        .btn-lanjut { background-color: #2E3A49; color: white; border: none; padding: 12px 24px; border-radius: 8px; font-family: 'Poppins'; font-weight: 600; cursor: pointer; margin-top: 30px; width: 100%; font-size: 16px; transition: 0.3s; }
+        .btn-lanjut:hover { background-color: #1E293B; }
+        .btn-lanjut:disabled { background-color: #CBD5E1; cursor: not-allowed; }
+        #layarHasil { display: none; text-align: center; }
+        .skor-box { font-size: 60px; font-weight: 700; color: #FFB800; margin: 20px 0; }
+        .statistik { display: flex; justify-content: center; gap: 30px; margin-bottom: 30px; }
+        .stat-item { background: #F8FAFC; padding: 15px 25px; border-radius: 10px; }
+        .stat-benar { color: #10B981; font-weight: bold; font-size: 20px; }
+        .stat-salah { color: #EF4444; font-weight: bold; font-size: 20px; }
+        .aksi-ganda { display: flex; gap: 15px; justify-content: center; }
+        .btn-pembahasan { background-color: white; color: #2E3A49; border: 2px solid #2E3A49; padding: 12px 24px; border-radius: 8px; font-weight: 600; cursor: pointer; flex: 1; text-decoration: none; }
+        .btn-pembahasan:hover { background-color: #F1F5F9; }
+        .btn-materi-lanjut { background-color: #FFB800; color: white; border: none; padding: 12px 24px; border-radius: 8px; font-weight: 600; cursor: pointer; flex: 1; }
+    </style>
+</head>
+<body>
+
+    <div class="kuis-container">
+        <div id="layarKuis">
+            <div class="header-kuis">
+                <span style="color: #64748B; font-size: 14px;">Latihan Barisan Aritmatika</span>
+                <h2 style="margin: 5px 0 0 0;" id="indikatorSoal">Soal 1 / 5</h2>
+            </div>
+            <div class="soal-teks" id="teksSoal">Memuat soal...</div>
+            <div class="opsi-list" id="wadahOpsi"></div>
+            <button id="btnLanjut" class="btn-lanjut" disabled>Pilih jawaban dulu</button>
+        </div>
+
+        <div id="layarHasil">
+            <h2>Latihan Selesai! 🎉</h2>
+            <div class="skor-box" id="nilaiAkhir">0</div>
+            <div class="statistik">
+                <div class="stat-item"><div style="font-size: 14px;">Benar</div><div class="stat-benar" id="jmlBenar">0</div></div>
+                <div class="stat-item"><div style="font-size: 14px;">Salah</div><div class="stat-salah" id="jmlSalah">0</div></div>
+            </div>
+            <div class="aksi-ganda">
+                <a href="pembahasan2.html" class="btn-pembahasan">Lihat Pembahasan</a>
+                <button class="btn-materi-lanjut" onclick="bukaDashboard()">Kembali ke Dashboard 🔓</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const bankSoal = [
+            {
+                pertanyaan: "Diketahui sebuah barisan bilangan: $10, 7, 4, 1, \\dots$<br>Berapakah nilai beda ($b$) dari barisan aritmatika tersebut?",
+                opsi: ["$3$", "$1$", "$-2$", "$-3$"],
+                jawabanBenar: 3 // D
+            },
+            {
+                pertanyaan: "Suku pertama dari suatu barisan aritmatika adalah $5$ dan bedanya adalah $2$. Nilai suku ke-8 ($U_8$) adalah...",
+                opsi: ["$15$", "$17$", "$19$", "$21$"],
+                jawabanBenar: 2 // C
+            },
+            {
+                pertanyaan: "Dari barisan aritmatika $4, 9, 14, 19, \\dots$, suku ke berapakah yang nilainya $44$?",
+                opsi: ["$7$", "$8$", "$9$", "$10$"],
+                jawabanBenar: 2 // C
+            },
+            {
+                pertanyaan: "Dalam sebuah gedung pertunjukan, baris paling depan tersedia $15$ kursi. Baris di belakangnya selalu tersedia $4$ kursi lebih banyak dari baris di depannya. Berapa banyak kursi pada baris ke-6?",
+                opsi: ["$31$", "$35$", "$39$", "$43$"],
+                jawabanBenar: 1 // B
+            },
+            {
+                pertanyaan: "Rumus suku ke-n dari barisan aritmatika $2, 6, 10, 14, \\dots$ adalah...",
+                opsi: ["$U_n = 4n - 2$", "$U_n = 4n + 2$", "$U_n = 2n + 4$", "$U_n = 2n - 4$"],
+                jawabanBenar: 0 // A
+            }
+        ];
+
+        let soalSekarang = 0; let skorBenar = 0; let jawabanTerpilih = null;
+
+        function muatSoal() {
+            jawabanTerpilih = null;
+            document.getElementById("btnLanjut").disabled = true;
+            document.getElementById("btnLanjut").innerText = "Pilih jawaban dulu";
+            document.getElementById("indikatorSoal").innerText = `Soal ${soalSekarang + 1} / ${bankSoal.length}`;
+            document.getElementById("teksSoal").innerHTML = bankSoal[soalSekarang].pertanyaan;
+            
+            const wadahOpsi = document.getElementById("wadahOpsi");
+            wadahOpsi.innerHTML = "";
+            bankSoal[soalSekarang].opsi.forEach((teks, index) => {
+                const div = document.createElement("div");
+                div.className = "opsi-item";
+                div.innerHTML = teks;
+                div.onclick = () => pilihJawaban(index, div);
+                wadahOpsi.appendChild(div);
+            });
+            
+            // Render ulang rumus matematika setelah dimuat
+            if (window.MathJax) { MathJax.typesetPromise(); }
+        }
+
+        function pilihJawaban(index, elemenDiv) {
+            jawabanTerpilih = index;
+            document.querySelectorAll(".opsi-item").forEach(o => o.classList.remove("terpilih"));
+            elemenDiv.classList.add("terpilih");
+            document.getElementById("btnLanjut").disabled = false;
+            document.getElementById("btnLanjut").innerText = (soalSekarang === bankSoal.length - 1) ? "Kumpulkan Jawaban" : "Lanjut";
+        }
+
+        document.getElementById("btnLanjut").addEventListener("click", () => {
+            if (jawabanTerpilih === bankSoal[soalSekarang].jawabanBenar) skorBenar++;
+            soalSekarang++;
+            if (soalSekarang < bankSoal.length) muatSoal();
+            else tampilkanHasil();
+        });
+
+        function tampilkanHasil() {
+            document.getElementById("layarKuis").style.display = "none";
+            document.getElementById("layarHasil").style.display = "block";
+            document.getElementById("nilaiAkhir").innerText = Math.round((skorBenar / bankSoal.length) * 100);
+            document.getElementById("jmlBenar").innerText = skorBenar;
+            document.getElementById("jmlSalah").innerText = bankSoal.length - skorBenar;
+        }
+
+        function bukaDashboard() {
+            localStorage.setItem('progressMateri', 'lulus-materi-2');
+            window.location.href = 'dashboard.html';
+        }
+
+        muatSoal();
+    </script>
+</body>
+</html>
